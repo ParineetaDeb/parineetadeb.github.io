@@ -1,0 +1,451 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Parineeta Deb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: a vertical system log — each section is a timestamped entry,
+     indexed by a sticky directory nav; serif heads over mono labels over sans body. */
+  :root{
+    --bg:#f6f4ee;
+    --surface:#ffffff;
+    --surface-2:#edeadf;
+    --fg:#1b1d1f;
+    --muted:#5c6168;
+    --line:#d9d4c6;
+    --accent:#0f7a72;      /* security track — deep teal */
+    --accent-2:#b5670f;    /* content track — amber-ochre */
+    --accent-fg:#ffffff;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b0f10;
+      --surface:#12171a;
+      --surface-2:#161d20;
+      --fg:#eceeec;
+      --muted:#9aa3a0;
+      --line:#262e30;
+      --accent:#5fd6c9;
+      --accent-2:#e8a33d;
+      --accent-fg:#06110f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b0f10;
+    --surface:#12171a;
+    --surface-2:#161d20;
+    --fg:#eceeec;
+    --muted:#9aa3a0;
+    --line:#262e30;
+    --accent:#5fd6c9;
+    --accent-2:#e8a33d;
+    --accent-fg:#06110f;
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+    padding-left:max(16px, env(safe-area-inset-left,0px));
+    padding-right:max(16px, env(safe-area-inset-right,0px));
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-0.01em; text-wrap:balance; margin:0}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+  a{color:var(--accent)}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+
+  .wrap{max-width:860px; margin:0 auto}
+
+  /* top bar */
+  .topbar{
+    position:sticky; top:0; z-index:10;
+    background:color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding-block:14px;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .brand{font-family:'Fraunces',serif; font-weight:600; font-size:17px}
+  .brand .mono{color:var(--muted); font-size:12px; display:block; margin-top:1px}
+  nav{display:flex; gap:18px; flex-wrap:wrap}
+  nav a{
+    color:var(--muted); text-decoration:none; font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px; letter-spacing:.03em; text-transform:uppercase;
+  }
+  nav a:hover{color:var(--fg)}
+  .theme-btn{
+    border:1px solid var(--line); background:var(--surface); color:var(--fg);
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.03em;
+    padding:6px 10px; border-radius:5px; cursor:pointer;
+  }
+
+  /* hero */
+  .hero{padding-block: 56px 36px}
+  .tag-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px}
+  .badge{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.04em;
+    padding:4px 9px; border-radius:4px; border:1px solid var(--line); color:var(--muted);
+  }
+  .badge.sec{color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--line))}
+  .badge.con{color:var(--accent-2); border-color:color-mix(in srgb, var(--accent-2) 45%, var(--line))}
+
+  .hero h1{font-size:clamp(34px,6vw,54px); line-height:1.05}
+  .hero .headline{
+    margin-top:14px; font-size:clamp(16px,2.3vw,19px); color:var(--muted); max-width:62ch;
+  }
+  .hero .summary{margin-top:18px; max-width:65ch; font-size:15px}
+
+  .contact-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+  .pill{
+    display:inline-flex; align-items:center; gap:7px;
+    border:1px solid var(--line); background:var(--surface);
+    padding:8px 13px; border-radius:7px; font-size:13.5px; text-decoration:none; color:var(--fg);
+    cursor:pointer;
+  }
+  .pill:hover{border-color:var(--accent)}
+  .pill .mono{font-size:12px; color:var(--muted)}
+
+  /* log entries */
+  .log-index{
+    padding-block:10px 30px; display:flex; gap:10px; flex-wrap:wrap;
+  }
+  section.entry{
+    padding-block:34px; border-top:1px solid var(--line); scroll-margin-top:72px;
+  }
+  .entry-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:18px}
+  .entry-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);
+    white-space:nowrap;
+  }
+  .entry-tag::before{content:"> "; color:var(--accent)}
+  .entry-head h2{font-size:clamp(22px,3.4vw,28px)}
+
+  .role{
+    border:1px solid var(--line); border-radius:10px; background:var(--surface);
+    padding:18px 20px; margin-bottom:16px;
+  }
+  .role:last-child{margin-bottom:0}
+  .role-top{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:baseline}
+  .role-title{font-weight:600; font-size:16px}
+  .role-org{color:var(--muted); font-size:14px}
+  .role-meta{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); white-space:nowrap}
+  .role ul{margin:12px 0 0; padding-left:19px}
+  .role li{margin-bottom:6px; font-size:14.5px}
+  .track{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10.5px;
+    letter-spacing:.04em; padding:2px 7px; border-radius:4px; margin-top:8px;
+  }
+  .track.sec{color:var(--accent); background:color-mix(in srgb, var(--accent) 14%, transparent)}
+  .track.con{color:var(--accent-2); background:color-mix(in srgb, var(--accent-2) 16%, transparent)}
+
+  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media (max-width:640px){.proj-grid{grid-template-columns:1fr}}
+  .proj{
+    border:1px solid var(--line); border-radius:10px; padding:18px 20px; background:var(--surface);
+    display:flex; flex-direction:column; min-width:0;
+  }
+  .proj h3{font-size:16.5px; margin-bottom:4px}
+  .proj .date{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:10px}
+  .proj ul{margin:0; padding-left:18px; flex:1}
+  .proj li{font-size:13.5px; margin-bottom:6px}
+  .proj .stack{margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent)}
+
+  .topic-grid{display:flex; flex-wrap:wrap; gap:8px}
+  .topic{
+    font-size:13px; border:1px solid var(--line); border-radius:6px; padding:6px 11px;
+    background:var(--surface-2);
+  }
+
+  .skills-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px 28px}
+  @media (max-width:640px){.skills-grid{grid-template-columns:1fr}}
+  .skill-cat h3{font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--muted); margin-bottom:8px}
+  .skill-cat p{font-size:14px; margin:0}
+
+  .edu-item{margin-bottom:16px}
+  .edu-item:last-child{margin-bottom:0}
+  .edu-title{font-weight:600; font-size:15px}
+  .edu-sub{color:var(--muted); font-size:13.5px}
+  .edu-meta{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-top:2px}
+
+  footer{
+    border-top:1px solid var(--line); padding-block:30px 46px; margin-top:20px;
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);
+    display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .copied{color:var(--accent)}
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">Parineeta Deb<span class="mono">security.log &amp; content.log</span></div>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#writing">writing</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button">dark mode</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="about">
+    <div class="tag-row">
+      <span class="badge sec">cybersecurity</span>
+      <span class="badge con">technical writing</span>
+      <span class="badge">python</span>
+    </div>
+    <h1>Parineeta Deb</h1>
+    <p class="headline">Cybersecurity Intern &amp; Python Developer · Technical Content Writer · MCA Candidate</p>
+    <p class="summary">
+      Computer Applications postgraduate with hands-on cybersecurity internship experience in vulnerability
+      assessment, penetration testing, and security log monitoring using Nmap and Wireshark. Practical experience
+      in Linux-based environments (Kali Linux) and working knowledge of risk assessment and compliance frameworks
+      (ISO, NIST). Also an active technical content writer, producing structured, beginner-friendly tutorials on
+      networking and cybersecurity, with a background in published journalism. Based in Silchar, Assam, India.
+    </p>
+    <div class="contact-row">
+      <a class="pill" href="https://www.linkedin.com/in/parineeta-deb-293695280" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="pill" href="https://github.com/ParineetaDeb" target="_blank" rel="noopener">GitHub ↗</a>
+      <button class="pill" type="button" data-copy="debparineeta@gmail.com">
+        <span class="mono">email</span> debparineeta@gmail.com
+      </button>
+      <button class="pill" type="button" data-copy="+91 9127148037">
+        <span class="mono">phone</span> +91 9127148037
+      </button>
+    </div>
+  </section>
+
+  <section class="entry" id="experience">
+    <div class="entry-head">
+      <span class="entry-tag">experience.log</span>
+      <h2>Experience</h2>
+    </div>
+
+    <div class="role">
+      <div class="role-top">
+        <div>
+          <div class="role-title">Technical Content Contributor</div>
+          <div class="role-org">TechWithJuned · Remote</div>
+        </div>
+        <div class="role-meta">OCT 2026 – PRESENT</div>
+      </div>
+      <span class="track con">CONTENT</span>
+      <ul>
+        <li>Write and publish technical tutorials on networking and cybersecurity topics (DNS, firewalls, VPNs, IP addressing), consistently meeting a target of two published tutorials per day.</li>
+        <li>Follow a structured editorial format — concept explanation, hands-on steps, common-error tables, summary — to keep content consistent, accurate, and beginner-friendly.</li>
+        <li>Research, fact-check, and edit all content for technical accuracy before submission through the employee publishing portal.</li>
+        <li>Incorporate editorial feedback across revisions, maintaining a zero-rejection publishing record.</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-top">
+        <div>
+          <div class="role-title">Cybersecurity Intern</div>
+          <div class="role-org">Unified Mentor Pvt. Ltd. · Remote, Gurugram, Haryana, India</div>
+        </div>
+        <div class="role-meta">JUN 2026 – SEP 2026</div>
+      </div>
+      <span class="track sec">SECURITY</span>
+      <ul>
+        <li>Monitored and analyzed security alerts and system logs to identify potential threats and anomalies.</li>
+        <li>Conducted vulnerability assessments and penetration testing under mentor guidance using Nmap and Wireshark.</li>
+        <li>Designed and built two independent Python-based security tools covering endpoint device monitoring and file-transfer auditing — see Projects.</li>
+        <li>Contributed to risk assessments and compliance documentation aligned with ISO and NIST frameworks.</li>
+        <li>Set up and operated Kali Linux in a virtual machine environment for hands-on security testing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry" id="projects">
+    <div class="entry-head">
+      <span class="entry-tag">projects.log</span>
+      <h2>Projects</h2>
+    </div>
+    <div class="proj-grid">
+      <div class="proj">
+        <h3>USB Device Control &amp; Monitoring Framework</h3>
+        <div class="date">Aug 2026 · Unified Mentor internship project</div>
+        <ul>
+          <li>Real-time Python/WMI tool detecting USB connect/disconnect events and fingerprinting devices by Vendor ID, Product ID, and Serial Number.</li>
+          <li>Deny-by-default, allowlist-based authorization to flag unauthorized devices automatically.</li>
+          <li>File-integrity auditing via MD5 hashing — detects files added, removed, or modified on connected drives.</li>
+          <li>Timestamped audit logs and automated summary reports.</li>
+        </ul>
+        <div class="stack">python · wmi · pywin32 · hashlib</div>
+      </div>
+      <div class="proj">
+        <h3>SentinelsVault</h3>
+        <div class="date">Jan 2026 · Personal project</div>
+        <ul>
+          <li>Cryptographic password manager on a Zero-Knowledge Architecture — encryption keys never leave the local environment.</li>
+          <li>Argon2id and PBKDF2 key derivation for secure, local password hashing.</li>
+          <li>Python/Tkinter GUI with SQLite3 backend — local-first, serverless, ACID-compliant storage.</li>
+          <li>Heuristic analysis engine and error-logging system addressing cloud vulnerability and weak entropy risks.</li>
+        </ul>
+        <div class="stack">python · tkinter · sqlite3 · argon2id</div>
+      </div>
+    </div>
+    <p style="margin-top:16px; font-size:13.5px">
+      Full source and certificates:
+      <a href="https://github.com/ParineetaDeb" target="_blank" rel="noopener">github.com/ParineetaDeb</a>
+    </p>
+  </section>
+
+  <section class="entry" id="writing">
+    <div class="entry-head">
+      <span class="entry-tag">content.log</span>
+      <h2>Writing</h2>
+    </div>
+    <p style="font-size:14.5px; max-width:65ch; margin-bottom:16px">
+      Technical tutorials for TechWithJuned, written to a strict beginner-first structure — plain-language analogies,
+      hands-on steps, and a common-errors table for every topic. Also writes Bengali-language newspaper
+      articles on health, technology, and social issues, and edits with Grammarly.
+    </p>
+    <div class="topic-grid">
+      <span class="topic">DNS</span>
+      <span class="topic">Firewalls</span>
+      <span class="topic">VPNs</span>
+      <span class="topic">TCP / UDP</span>
+      <span class="topic">HTTPS / SSL</span>
+      <span class="topic">IP addressing</span>
+      <span class="topic">Ports &amp; protocols</span>
+    </div>
+  </section>
+
+  <section class="entry" id="skills">
+    <div class="entry-head">
+      <span class="entry-tag">skills.log</span>
+      <h2>Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <h3>Technical</h3>
+        <p>Python, C++, Java, JavaScript, HTML, CSS, SQL, SQLite3, PostgreSQL, MongoDB</p>
+      </div>
+      <div class="skill-cat">
+        <h3>Frameworks &amp; Libraries</h3>
+        <p>React, React Native, Node.js, Tkinter, Django, FastAPI, Flask</p>
+      </div>
+      <div class="skill-cat">
+        <h3>Cybersecurity &amp; Networking</h3>
+        <p>Kali Linux, Nmap, Wireshark, OSINT, Vulnerability Assessment, Penetration Testing, Risk Assessment, ISO/NIST Compliance</p>
+      </div>
+      <div class="skill-cat">
+        <h3>AI / ML</h3>
+        <p>Artificial Intelligence, Machine Learning, Deep Learning, Neural Networks</p>
+      </div>
+      <div class="skill-cat">
+        <h3>Content Creation &amp; Editing</h3>
+        <p>Technical Content Writing, Tutorial Writing, Copyediting &amp; Proofreading (Grammarly), Journalism, Canva, Adobe Lightroom, InShot</p>
+      </div>
+      <div class="skill-cat">
+        <h3>Tools &amp; Platforms</h3>
+        <p>Git, GitHub, Visual Studio Code, Microsoft Office 365</p>
+      </div>
+      <div class="skill-cat">
+        <h3>Soft Skills</h3>
+        <p>Collaboration, Teamwork, Attention to Detail, Problem-Solving, Rapid Skill Acquisition, Time Management, Adaptability</p>
+      </div>
+      <div class="skill-cat">
+        <h3>Languages</h3>
+        <p>English, Hindi, Bengali (fluent)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" id="education">
+    <div class="entry-head">
+      <span class="entry-tag">education.log</span>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-item">
+      <div class="edu-title">Master of Computer Applications (MCA)</div>
+      <div class="edu-sub">Kalinga Institute of Industrial Technology, Bhubaneswar, Odisha, India</div>
+      <div class="edu-meta">SEP 2024 – APR 2026 · CGPA 6.93</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-title">Bachelor of Science in Computer Science (B.Sc.)</div>
+      <div class="edu-sub">Assam University, Silchar, Assam, India</div>
+      <div class="edu-meta">SEP 2021 – AUG 2024 · CGPA 6.86</div>
+    </div>
+  </section>
+
+  <section class="entry" id="contact">
+    <div class="entry-head">
+      <span class="entry-tag">contact.log</span>
+      <h2>Get in touch</h2>
+    </div>
+    <p style="font-size:14.5px; max-width:60ch; margin-bottom:18px">
+      Open to Software Engineering, Cybersecurity, and Technical Content roles.
+      FreeCodeCamp Python (Virtual), January 2026 — full certificate list on GitHub.
+    </p>
+    <div class="contact-row">
+      <button class="pill" type="button" data-copy="debparineeta@gmail.com"><span class="mono">email</span> debparineeta@gmail.com</button>
+      <button class="pill" type="button" data-copy="+91 9127148037"><span class="mono">phone</span> +91 9127148037</button>
+      <a class="pill" href="https://www.linkedin.com/in/parineeta-deb-293695280" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="pill" href="https://github.com/ParineetaDeb" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="pill" href="https://github.com/ParineetaDeb/Certificates" target="_blank" rel="noopener">Certificates ↗</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>Silchar, Assam, India</span>
+  <span id="footStatus">log level: all entries current</span>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  function apply(mode){
+    if(mode === 'dark'){ root.setAttribute('data-theme','dark'); btn.textContent = 'light mode'; }
+    else if(mode === 'light'){ root.setAttribute('data-theme','light'); btn.textContent = 'dark mode'; }
+    else { root.removeAttribute('data-theme');
+      var sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      btn.textContent = sysDark ? 'light mode' : 'dark mode';
+    }
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem('pd-theme'); }catch(e){}
+  apply(saved);
+  btn.addEventListener('click', function(){
+    var current = root.getAttribute('data-theme');
+    var sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var effectiveDark = current ? current === 'dark' : sysDark;
+    var next = effectiveDark ? 'light' : 'dark';
+    apply(next);
+    try{ localStorage.setItem('pd-theme', next); }catch(e){}
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var text = el.getAttribute('data-copy');
+      var original = el.innerHTML;
+      function done(ok){
+        el.innerHTML = ok ? 'copied ✓' : original;
+        setTimeout(function(){ el.innerHTML = original; }, 1400);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){done(true)}, function(){done(false)});
+      } else {
+        done(false);
+      }
+    });
+  });
+})();
+</script>
+
+</body></html>
